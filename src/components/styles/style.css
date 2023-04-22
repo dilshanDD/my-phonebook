@@ -1,34 +1,64 @@
+.main-container {
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: row;
+}
 .insert-contacts-container {
-    background-color: lightgray;
+  background-color: rgba(110, 108, 108, 0.877);
+  box-shadow: 0 8px 32px 0 rgba(100, 99, 99, 0.466);
   width: 50%;
   height: 100vh;
+  border-radius: 10px;
+  margin: 20px;
+}
+.list-container {
+  background-color: rgba(110, 108, 108, 0.877);
+  box-shadow: 0 8px 32px 0 rgba(100, 99, 99, 0.466);
+  height: 100vh;
+  width: 50%;
+  border-radius: 10px;
+  margin: 20px;
 }
 .text-field {
+  color: #fff;
   height: 25px;
   width: 70%;
   margin-top: 20px;
   padding: 10px;
+  border: none;
+  outline: 0;
+  border-radius: 10px;
 }
 .form-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.btn-container{
-    display: flex;
-    flex-direction: row;
-    margin-top: 20px;
+.btn-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
 }
 .btn {
-  padding: 10px;
-  margin-left: 20px;  
-  
+  padding: 15px;
+  margin-left: 20px;
+  border: none;
+  color: white;
+  border-radius: 5px;
 }
+.btn:hover {
+  cursor: pointer;
+  color: wheat;
+}
+.btn:active {
+  color: red;
+}
+
 .clear-btn {
-    background-color: red;
+  background-color: rgb(255, 98, 98);
 }
 .save-btn {
-    background-color: green;
+  background-color: rgba(1, 172, 1, 0.89);
 }
 h3 {
   margin: 0;
@@ -37,6 +67,117 @@ h3 {
   font-size: 24px;
   color: white;
 }
-ul{
-    list-style: decimal;
+ul {
+  list-style: none;
+}
+
+.list-icon {
+  margin-right: 10px;
+}
+
+.contact-item {
+  position: relative;
+  background-color: white;
+  margin: 10px;
+  padding: 15px;
+  border-radius: 50px;
+}
+.search-bar-container {
+  margin-top: 20px;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+}
+.search-bar {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  padding: 15px;
+  border: none;
+  outline: 0;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 400;
+}
+.delete-btn {
+  background-color: rgba(211, 211, 211, 0.521);
+  position: absolute;
+  right: 10px;
+  top: 9px;
+  padding: 10px;
+  border: none;
+  border-radius: 50%;
+}
+.delete-btn:hover {
+  cursor: pointer;
+  background-color: lightgray;
+}
+.delete-btn:active {
+  background-color: red;
+}
+.refresh-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.refresh-btn {
+  color: white;
+  padding: 10px;
+  border: none;
+  outline: 0;
+  background-color: transparent;
+}
+.refresh-btn:hover {
+  cursor: pointer;
+}
+.refresh-btn:active {
+  color: black;
+}
+.message-container {
+  margin-top: 10px;
+  text-align: center;
+}
+
+@media (max-width: 400px) {
+  /* .refresh-btn {  
+        margin-top: 10px;      
+        position: absolute;
+        top: 50px;
+        right: 35px;
+        
+      } */
+  .main-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .insert-contacts-container {
+    background-color: rgba(110, 108, 108, 0.877);
+    box-shadow: 0 8px 32px 0 rgba(100, 99, 99, 0.466);
+    width: 100%;
+    height: 100vh;
+    border-radius: 10px;
+    margin: 20px;
+  }
+  .list-container {
+    background-color: rgba(110, 108, 108, 0.877);
+    box-shadow: 0 8px 32px 0 rgba(100, 99, 99, 0.466);
+    height: 100vh;
+    width: 100%;
+    border-radius: 10px;
+    margin: 20px;
+  }
+}
+
+@media (max-width: 680px) {
+  .main-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .insert-contacts-container {
+    width: 100%;
+  }
+  .list-container {
+    width: 100%;
+  }
 }

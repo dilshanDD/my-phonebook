@@ -17,6 +17,7 @@ const InsertContacts = () => {
   const saveContactDetails = () => {
     dispatch(
       saveDetails({
+        id: Math.floor(Math.random()*1000),
         mobileNumber,
         name,
         email,
