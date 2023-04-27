@@ -19,17 +19,27 @@ const DisplayContacts = () => {
   const [searchKey, setSearchKey] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const { EDIT, INSERT } = typeConstants;
+  const  [selectedId, setSelectedId]  = useState("");
+  const  [openType, setOpenType]  = useState("");
 
   const allDetails = useSelector((state) => state.saveContacts.contactDetails);
   const searchDetails = useSelector(
     (state) => state.saveContacts.searchDetails
   );
   const handleOpenModal = () => {
+    setOpenType(INSERT);
+    setModalOpen(true);    
+  };
+  const handleEditOpenModal = (id) => {
     setModalOpen(true);
+    setSelectedId(id);
+    setOpenType(EDIT);
   };
 
   const handleCloseModal = () => {
     setModalOpen(false);
+    setSelectedId('');
+    setOpenType('');
   };
 
   const deleteButton = (id) => {
@@ -53,7 +63,8 @@ const DisplayContacts = () => {
       <InsertContacts
         isOpen={modalOpen}
         closeModal={handleCloseModal}
-        type={INSERT}
+        type={openType}
+        selectedId={selectedId}
       />
       <div className="list-container">
         <h3> My Contacts</h3>
@@ -80,10 +91,11 @@ const DisplayContacts = () => {
         <ul>
           {(searchDetails.length === 0 &&
             allDetails.map((detail) => {
-              const { id, name, mobileNumber, email,picture } = detail || {};
+              const { id, name, mobileNumber, email, picture } = detail || {};
               return (
                 <ListItems
                   deleteButton={deleteButton}
+                  handleEditOpenModal={handleEditOpenModal}
                   name={name}
                   mobileNumber={mobileNumber}
                   email={email}
@@ -94,15 +106,17 @@ const DisplayContacts = () => {
               );
             })) ||
             searchDetails.map((detail) => {
-              const { id, name, mobileNumber, email } = detail || {};
+              const {  id, name, mobileNumber, email, picture } = detail || {};
               return (
                 <ListItems
-                  deleteButton={deleteButton}
-                  name={name}
-                  mobileNumber={mobileNumber}
-                  email={email}
-                  id={id}
-                  key={id}
+                deleteButton={deleteButton}
+                handleEditOpenModal={handleEditOpenModal}
+                name={name}
+                mobileNumber={mobileNumber}
+                email={email}
+                id={id}
+                key={id}
+                picture={picture}
                 />
               );
             })}

@@ -1,14 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./styles/style.css";
-import { useDispatch } from "react-redux";
-import { saveDetails } from "../features/counter/SaveContactsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  saveDetails,
+  updateItemById,
+} from "../features/counter/SaveContactsSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRectangleXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faRectangleXmark,
+  faPhone,
+  faEnvelopeOpenText,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import ImagePicker from "./ImagePicker";
+import { typeConstants } from "./utils/typeConstants";
 
-const InsertContacts = ({ isOpen, closeModal }) => {
+const InsertContacts = ({ type, selectedId, isOpen, closeModal }) => {
+  const { EDIT, INSERT } = typeConstants;
   const dispatch = useDispatch();
+  const contact = useSelector((state) => state.saveContacts.contactDetails);
   const [userData, setUserData] = useState({
+    id: "",
     mobileNumber: "",
     name: "",
     email: "",
@@ -18,6 +30,7 @@ const InsertContacts = ({ isOpen, closeModal }) => {
   const clear = () => {
     setUserData({
       ...userData,
+      id: "",
       name: "",
       mobileNumber: "",
       email: "",
@@ -26,18 +39,57 @@ const InsertContacts = ({ isOpen, closeModal }) => {
   };
 
   const saveContactDetails = () => {
-    const { mobileNumber, name, email, picture } = userData || {};   
-    dispatch(
-      saveDetails({
-        id: Math.floor(Math.random() * 1000),
-        mobileNumber,
-        name,
-        email,
-        picture,
-      })
-    );
-    clear();
+    const { id, mobileNumber, name, email, picture } = userData || {};
+    switch (type) {
+      case EDIT:
+        dispatch(
+          updateItemById({
+            id,
+            mobileNumber,
+            name,
+            email,
+            picture,
+          })
+        );
+        break;
+      case INSERT:
+        dispatch(
+          saveDetails({
+            id: Math.floor(Math.random() * 1000),
+            mobileNumber,
+            name,
+            email,
+            picture,
+          })
+        );
+        clear();
+        break;
+
+      default:
+        break;
+    }
   };
+  const setUpdateContactDetails = () => {
+    const contactDetails = contact.find((obj) => obj.id === selectedId);
+    const { id, mobileNumber, name, email, picture } = contactDetails || {};
+    setUserData({
+      ...userData,
+      id: id || "",
+      mobileNumber: mobileNumber || "",
+      name: name || "",
+      email: email || "",
+      picture: picture || "",
+    });
+  };
+
+  useEffect(() => {
+    if (type === EDIT) {
+      setUpdateContactDetails();
+    } else {
+      clear();
+    }
+  }, [type]);
+
   if (!isOpen) return null;
   return (
     <div className="insert-contacts-container">
@@ -45,20 +97,30 @@ const InsertContacts = ({ isOpen, closeModal }) => {
         <button className="modal-close-button" onClick={closeModal}>
           <FontAwesomeIcon icon={faRectangleXmark} />
         </button>
-        <h3> Create New Contact</h3>
+        {type === INSERT ? (
+          <h3> Create new contact</h3>
+        ) : (
+          <h3> Update contact</h3>
+        )}
+
         <div className="image-upload-container">
           <ImagePicker setUserData={setUserData} userData={userData} />
         </div>
         <form className="form-container">
-          <input
-            type="text"
-            placeholder="Mobile Number"
-            className="text-field"
-            value={userData.mobileNumber}
-            onChange={(event) =>
-              setUserData({ ...userData, mobileNumber: event.target.value })
-            }
-          />
+          <div className="text-field-container">
+            <FontAwesomeIcon icon={faPhone} className="input-icon"/>
+            <input
+              type="text"
+              placeholder="Mobile Number"
+              className="text-field"
+              value={userData.mobileNumber}
+              onChange={(event) =>
+                setUserData({ ...userData, mobileNumber: event.target.value })
+              }
+            />
+          </div>
+          <div className="text-field-container">
+          <FontAwesomeIcon icon={faUser} className="input-icon"/>
           <input
             type="text"
             placeholder="Name"
@@ -68,6 +130,9 @@ const InsertContacts = ({ isOpen, closeModal }) => {
               setUserData({ ...userData, name: event.target.value })
             }
           />
+          </div>
+          <div className="text-field-container">
+          <FontAwesomeIcon icon={faEnvelopeOpenText} className="input-icon"/>
           <input
             type="email"
             placeholder="Email"
@@ -77,12 +142,13 @@ const InsertContacts = ({ isOpen, closeModal }) => {
               setUserData({ ...userData, email: event.target.value })
             }
           />
+          </div>
           <button
             type="button"
             className="save-btn"
             onClick={saveContactDetails}
           >
-            save
+            {type === INSERT ? `create` : `update`}
           </button>
         </form>
       </div>

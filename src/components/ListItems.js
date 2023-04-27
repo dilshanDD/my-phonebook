@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const ListItems = ({
+  handleEditOpenModal,
   deleteButton,
   name,
   mobileNumber,
@@ -21,23 +22,21 @@ const ListItems = ({
         {picture ? (
           <img src={picture} alt="Profile" className="list-picture" />
         ) : (
-          <button className="btn">           
-            <FontAwesomeIcon icon={faUser} className="icon"/>
+          <button className="btn">
+            <FontAwesomeIcon icon={faUser} className="icon" />
           </button>
-        )} 
-        <span className="contact-details-container">
-          {name}
-        </span>
+        )}
+        <span className="contact-details-container">{name}</span>
       </div>
       <div className="contact-item-edit-delete-view-container">
-        <button className="btn">
+        <button className="btn" onClick={() => handleEditOpenModal(id)}>
           <FontAwesomeIcon icon={faEye} className="icon" />
         </button>
-        <button className="btn">
+        <button className="btn" onClick={() => handleEditOpenModal(id)}>
           <FontAwesomeIcon icon={faPen} className="icon" />
         </button>
         <button className="btn" onClick={() => deleteButton(id)}>
-          <FontAwesomeIcon icon={faTrash} className="icon"/>
+          <FontAwesomeIcon icon={faTrash} className="icon" />
         </button>
       </div>
     </li>
