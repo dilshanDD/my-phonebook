@@ -2,10 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./styles/style.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowsRotate,
-  faUserPlus 
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowsRotate, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "./SearchBar";
 import {
   deleteItem,
@@ -15,11 +12,14 @@ import {
 import InsertContacts from "./InsertContacts";
 import ListItems from "./ListItems";
 import DeveloperDetails from "./DeveloperDetails";
+import { typeConstants } from "./utils/typeConstants";
 
 const DisplayContacts = () => {
   const dispatch = useDispatch();
   const [searchKey, setSearchKey] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+  const { EDIT, INSERT } = typeConstants;
+
   const allDetails = useSelector((state) => state.saveContacts.contactDetails);
   const searchDetails = useSelector(
     (state) => state.saveContacts.searchDetails
@@ -42,14 +42,19 @@ const DisplayContacts = () => {
         dispatch(searchItem(searchKey));
       }
     }, 500);
-  }, [searchKey]);
+  }, [searchKey, dispatch]);
+
   const resetList = () => {
     dispatch(resetItems());
   };
 
   return (
     <>
-      <InsertContacts isOpen={modalOpen} closeModal={handleCloseModal} />
+      <InsertContacts
+        isOpen={modalOpen}
+        closeModal={handleCloseModal}
+        type={INSERT}
+      />
       <div className="list-container">
         <h3> My Contacts</h3>
         <SearchBar setSearchKey={setSearchKey} searchKey={searchKey} />
@@ -75,7 +80,7 @@ const DisplayContacts = () => {
         <ul>
           {(searchDetails.length === 0 &&
             allDetails.map((detail) => {
-              const { id, name, mobileNumber, email } = detail || {};
+              const { id, name, mobileNumber, email,picture } = detail || {};
               return (
                 <ListItems
                   deleteButton={deleteButton}
@@ -84,6 +89,7 @@ const DisplayContacts = () => {
                   email={email}
                   id={id}
                   key={id}
+                  picture={picture}
                 />
               );
             })) ||
@@ -101,7 +107,7 @@ const DisplayContacts = () => {
               );
             })}
         </ul>
-       <DeveloperDetails/>
+        <DeveloperDetails />
       </div>
     </>
   );

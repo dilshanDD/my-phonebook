@@ -52,18 +52,19 @@
   display: flex;
 }
 .contact-item-details-container {
+  display: flex;
+  align-items: center;
   max-width: 400px;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 .contact-item-edit-delete-view-container {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;  
+  justify-content: flex-end;
 }
-.developer-contact-details-container{
-  width: 250px; 
+.developer-contact-details-container {
+  width: 250px;
   background-color: rgba(110, 108, 108, 0.6);
   padding: 5px;
   text-align: center;
@@ -72,18 +73,18 @@
   bottom: 20px;
   right: 5px;
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
 }
-.contact-details-container{
+.contact-details-container {
   margin-left: 5px;
 }
-.insert-image-container{
+.insert-image-container {
   width: 200px;
   height: 200px;
   background-color: red;
   border-radius: 50%;
 }
-.image-upload-container{
+.image-upload-container {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -159,10 +160,17 @@ li {
   font-size: 16px;
   font-weight: 400;
 }
-.developer-contact-details{
-  color: white;  
+.developer-contact-details {
+  color: white;
   font-weight: 400;
   font-size: 14px;
+}
+.list-picture {
+  min-width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-left: 5px;
+  object-fit: cover;
 }
 
 /* Buttons */
@@ -242,7 +250,7 @@ li {
   cursor: pointer;
 }
 /* Profile picture */
-.profile-image {  
+.profile-image {
   height: 200px;
   width: 200px;
   border-radius: 50%;
@@ -289,6 +297,15 @@ li {
   }
   .list-container {
     width: 100%;
+  }
+  .modal-container {
+    width: 70%;
+  }
+  .contact-details-container {
+    font-size: 12px;
+  }
+  .icon{
+    font-size: 11px;
   }
 }
 

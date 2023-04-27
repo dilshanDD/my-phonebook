@@ -21,7 +21,7 @@ const InsertContacts = ({ isOpen, closeModal }) => {
       name: "",
       mobileNumber: "",
       email: "",
-      picture: {},
+      picture: "",
     });
   };
 
