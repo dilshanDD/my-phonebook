@@ -4,25 +4,36 @@ import { useDispatch } from "react-redux";
 import { saveDetails } from "../features/counter/SaveContactsSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRectangleXmark } from "@fortawesome/free-solid-svg-icons";
+import ImagePicker from "./ImagePicker";
 
 const InsertContacts = ({ isOpen, closeModal }) => {
-  const [mobileNumber, setMobileNumber] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const dispatch = useDispatch();
+  const [userData, setUserData] = useState({
+    mobileNumber: "",
+    name: "",
+    email: "",
+    picture: "",
+  });
 
   const clear = () => {
-    setMobileNumber("");
-    setName("");
-    setEmail("");
+    setUserData({
+      ...userData,
+      name: "",
+      mobileNumber: "",
+      email: "",
+      picture: {},
+    });
   };
+
   const saveContactDetails = () => {
+    const { mobileNumber, name, email, picture } = userData || {};   
     dispatch(
       saveDetails({
         id: Math.floor(Math.random() * 1000),
         mobileNumber,
         name,
         email,
+        picture,
       })
     );
     clear();
@@ -35,32 +46,36 @@ const InsertContacts = ({ isOpen, closeModal }) => {
           <FontAwesomeIcon icon={faRectangleXmark} />
         </button>
         <h3> Create New Contact</h3>
+        <div className="image-upload-container">
+          <ImagePicker setUserData={setUserData} userData={userData} />
+        </div>
         <form className="form-container">
-          <input
-            type="file"
-            className="insert-image-container"
-            placeholder="Profile Picture"
-          />
           <input
             type="text"
             placeholder="Mobile Number"
             className="text-field"
-            value={mobileNumber}
-            onChange={(event) => setMobileNumber(event.target.value)}
+            value={userData.mobileNumber}
+            onChange={(event) =>
+              setUserData({ ...userData, mobileNumber: event.target.value })
+            }
           />
           <input
             type="text"
             placeholder="Name"
             className="text-field"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
+            value={userData.name}
+            onChange={(event) =>
+              setUserData({ ...userData, name: event.target.value })
+            }
           />
           <input
             type="email"
             placeholder="Email"
             className="text-field"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            value={userData.email}
+            onChange={(event) =>
+              setUserData({ ...userData, email: event.target.value })
+            }
           />
           <button
             type="button"
