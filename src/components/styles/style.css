@@ -97,6 +97,12 @@
   flex-direction: row;  
   margin-top: 20px;
 }
+.text-error-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;  
+  text-align: end;
+}
 
 /* Button containers */
 .refresh-add-user-button-container {
@@ -114,12 +120,21 @@
   color: white;
   background-color: rgba(0, 0, 0, 0.4);
   height: 25px;
-  width: 90%;
-  padding: 10px;
-  border: none;
+  width: 95%;
+  padding: 10px;  
+  border: 1px solid rgba(0, 0, 0, 0);
   outline: 0;
   border-radius: 10px;
 }
+
+.text-field-error{
+  border: 1px solid red;
+}
+.error-message{
+  font-size: 12px;
+  color: rgb(207, 170, 170);
+}
+
 .input-icon{
   color: white;
   font-size: 20px;
