@@ -31,9 +31,7 @@ const InsertContacts = ({ type, selectedId, isOpen, closeModal }) => {
   });
   const [errors, setErrors] = useState({});
   const [alertOpen, setAlertOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState(
-    "Contact updated successfully"
-  );
+  const [alertMessage, setAlertMessage] = useState("");
   const clear = () => {
     setUserData({
       ...userData,
