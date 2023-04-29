@@ -12,10 +12,11 @@ import {
   faEnvelopeOpenText,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import ImagePicker from "./ImagePicker";
+import ImagePicker from "./otherComponents/ImagePicker";
 import { typeConstants } from "./utils/typeConstants";
 import { every } from "lodash";
-import { checkValues } from './utils/helperFunctions'
+import { checkValues } from "./utils/helperFunctions";
+import AlertBox from "./otherComponents/AlertBox";
 
 const InsertContacts = ({ type, selectedId, isOpen, closeModal }) => {
   const { EDIT, INSERT } = typeConstants;
@@ -28,8 +29,11 @@ const InsertContacts = ({ type, selectedId, isOpen, closeModal }) => {
     email: "",
     picture: "",
   });
-  const [errors, setErrors] = useState({});  
-
+  const [errors, setErrors] = useState({});
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(
+    "Contact updated successfully"
+  );
   const clear = () => {
     setUserData({
       ...userData,
@@ -54,8 +58,19 @@ const InsertContacts = ({ type, selectedId, isOpen, closeModal }) => {
       name: name,
       email: email,
     };
-    const allSet = every(validateObj, (value) => Boolean(value));
-    if (allSet) {
+   
+    const entries = Object.entries(validateObj);  
+    let hasMessage = false;
+
+    for (const [key, value] of entries) {     
+      setErrors((prevErrors) => ({ ...prevErrors, ...checkValues(key, value) }));
+      const errorObj  = checkValues(key, value);
+      if (typeof errorObj[key] === 'string' && errorObj[key].trim().length > 0) {
+        hasMessage = true;        
+      }
+    }
+
+    if (!hasMessage) {
       switch (type) {
         case EDIT:
           dispatch(
@@ -67,36 +82,28 @@ const InsertContacts = ({ type, selectedId, isOpen, closeModal }) => {
               picture,
             })
           );
+          setAlertOpen(true);
+          setAlertMessage("Contact updated successfully");
           break;
         case INSERT:
-          if (allSet) {
-            dispatch(
-              saveDetails({
-                id: Math.floor(Math.random() * 1000),
-                mobileNumber,
-                name,
-                email,
-                picture,
-              })
-            );
-            clear();
-          }
-          const emptyKeys = Object.keys(validateObj).filter(
-            (key) => !validateObj[key]
+          dispatch(
+            saveDetails({
+              id: Math.floor(Math.random() * 1000),
+              mobileNumber,
+              name,
+              email,
+              picture,
+            })
           );
-          const error = checkValues(emptyKeys[0], "");
-          setErrors((prevErrors) => ({ ...prevErrors, ...error }));
+          setAlertOpen(true);
+          setAlertMessage("Contact created successfully");
+          clear();
           break;
 
         default:
           break;
       }
     }
-    const emptyKeys = Object.keys(validateObj).filter(
-      (key) => !validateObj[key]
-    );
-    const error = checkValues(emptyKeys[0], "");
-    setErrors((prevErrors) => ({ ...prevErrors, ...error }));
   };
 
   const setUpdateContactDetails = () => {
@@ -123,6 +130,11 @@ const InsertContacts = ({ type, selectedId, isOpen, closeModal }) => {
   if (!isOpen) return null;
   return (
     <div className="insert-contacts-container">
+      <AlertBox
+        alertOpen={alertOpen}
+        alertMessage={alertMessage}
+        setAlertOpen={setAlertOpen}
+      />
       <div className="modal-container">
         <button
           className="modal-close-button"

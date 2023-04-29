@@ -28,6 +28,41 @@
   width: 60%;
   border-radius: 10px;
 }
+.alert-box {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(99, 194, 47, 1) 0%,
+    rgba(115, 255, 228, 1) 100%
+  );
+  width: 250px;
+  height: 50px;
+  z-index: 2;
+  color: white;
+  box-shadow: 2px 5px 32px rgb(156, 228, 138);
+  padding: 10px;
+  border-radius: 10px;
+  animation: fade-in 0.5s forwards;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.alert-box.fade-out {
+  animation: fade-out 0.5s forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
 
 /* Sub Containers */
 .modal-container {
@@ -90,17 +125,17 @@
   justify-content: center;
   margin-top: 5px;
 }
-.text-field-container{
+.text-field-container {
   width: 80%;
   display: flex;
   align-items: center;
-  flex-direction: row;  
+  flex-direction: row;
   margin-top: 20px;
 }
-.text-error-container{
+.text-error-container {
   display: flex;
   flex-direction: column;
-  width: 100%;  
+  width: 100%;
   text-align: end;
 }
 
@@ -121,21 +156,21 @@
   background-color: rgba(0, 0, 0, 0.4);
   height: 25px;
   width: 95%;
-  padding: 10px;  
+  padding: 10px;
   border: 1px solid rgba(0, 0, 0, 0);
   outline: 0;
   border-radius: 10px;
 }
 
-.text-field-error{
+.text-field-error {
   border: 1px solid red;
 }
-.error-message{
+.error-message {
   font-size: 12px;
   color: rgb(207, 170, 170);
 }
 
-.input-icon{
+.input-icon {
   color: white;
   font-size: 20px;
   margin-right: 15px;
@@ -265,8 +300,8 @@ li {
 }
 .modal-close-button {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 2px;
+  right: 2px;
   font-size: 25px;
   background-color: transparent;
   border: none;
@@ -284,14 +319,14 @@ li {
   border: 1px dashed rgba(255, 254, 254, 0.4);
   overflow: hidden;
 }
-.profile-icon{
+.profile-icon {
   color: rgba(255, 255, 255, 0.5);
 }
 
 .image-preview {
   position: relative;
   height: 100%;
-  width: 100%;  
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -338,7 +373,7 @@ li {
   .contact-details-container {
     font-size: 12px;
   }
-  .icon{
+  .icon {
     font-size: 11px;
   }
 }

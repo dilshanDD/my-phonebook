@@ -3,14 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import "./styles/style.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowsRotate, faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import SearchBar from "./SearchBar";
+import SearchBar from "./otherComponents/SearchBar";
 import {
   deleteItem,
   searchItem,
   resetItems,
 } from "../features/counter/SaveContactsSlice";
 import InsertContacts from "./InsertContacts";
-import ListItems from "./ListItems";
+import ListItems from "./otherComponents/ListItems";
 import DeveloperDetails from "./DeveloperDetails";
 import { typeConstants } from "./utils/typeConstants";
 
